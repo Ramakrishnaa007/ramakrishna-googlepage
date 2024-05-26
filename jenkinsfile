@@ -1,41 +1,38 @@
 pipeline {
     agent any
-    tools{
-        jdk 'jdk-8'
-    }
+	
+	tools {
+    jdk 'java 1.8'
+
+  }
 
     stages {
-        stage('git') {
+        stage('CLONE SCM') {
             steps {
-                echo 'scm'
-				git branch: 'main', url: 'https://github.com/devopstraininghub/mindcircuit-facebook.git'
+                echo 'Cloning Googlepage project code'
+				git branch: 'main', url: 'https://github.com/Ramakrishnaa007/ramakrishna-mindcircuit-facebook.git'
             }
         }
 		
-		stage('sonar') {
+		stage('SONARqube ANALYSIS') {
             steps {
-                echo 'scanning project'
-			    sh 'mvn sonar:sonar'
+                echo 'code inspection of   Googlepage  project code'
+			    sh 'mvn clean compile sonar:sonar'    
             }
         }
 		
-		stage('build') {
+		
+		stage('Build Artifact ') {
             steps {
-                echo 'generating artifact using maven build tool'
-			    sh 'mvn clean install'
+                echo 'generating artifact with maven build tool'
+				sh 'mvn  install'
             }
         }
 		
-		stage('nexus artifactory') {
+		stage('Deploy to tomcat') {
             steps {
-                echo 'publish to nexus'
-			    sh 'mvn  deploy'
-            }
-        }
-		stage('deploy to tomcat') {
-            steps {
-                echo 'tomcat deploy'
-			    deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://100.25.144.30:8091/')], contextPath: 'mc-app-facebook', war: '**/*.war'
+                echo 'Deploying artifact to tomcat webserver '
+				deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://52.87.153.78:8081/')], contextPath: 'googlepage', war: '**/*.war'
             }
         }
     }
