@@ -2,7 +2,7 @@ pipeline {
     agent any
 	
 	tools {
-    jdk 'java 1.8'
+    jdk 'java 11.0'
 
   }
 
@@ -28,11 +28,18 @@ pipeline {
 				sh 'mvn  install'
             }
         }
+	
+		stage('Publish to nexus') {
+            steps {
+                echo 'publishinig to nexus repository'
+				sh 'mvn  deploy'
+            }
+        }
 		
 		stage('Deploy to tomcat') {
             steps {
                 echo 'Deploying artifact to tomcat webserver '
-				deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.167.199.250:8081/')], contextPath: 'googlepage2', war: '**/*.war'
+				deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://18.210.18.66:8090/')], contextPath: 'googlepage', war: '**/*.war'
             }
         }
     }
