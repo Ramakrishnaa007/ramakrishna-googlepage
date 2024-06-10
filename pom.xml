@@ -4,8 +4,8 @@
 	<groupId>in.javahome</groupId>
 	<artifactId>myweb</artifactId>
 	<packaging>war</packaging>
-	<version>12.2.1</version>
-	<name>Mindcircuit Home myweb</name>
+	<version>12.2.2</version>
+	<name>GOOGLE-PAGE</name>
 	<url>http://maven.apache.org</url>
 	
 	<properties>
