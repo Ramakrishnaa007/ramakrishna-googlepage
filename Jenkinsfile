@@ -39,7 +39,7 @@ pipeline {
 		stage('Deploy to tomcat') {
             steps {
                 echo 'Deploying artifact to tomcat webserver '
-				deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://18.210.18.66:8090/')], contextPath: 'googlepage', war: '**/*.war'
+				deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.146.73.44:8090/')], contextPath: 'greeksurvey', war: '*/*.war'
             }
         }
     }
